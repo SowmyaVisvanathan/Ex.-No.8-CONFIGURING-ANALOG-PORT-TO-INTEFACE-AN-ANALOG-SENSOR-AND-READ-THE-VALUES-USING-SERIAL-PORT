@@ -6,9 +6,9 @@
 ###  
 
 ## Aim: 
-To configure ADC channel for interfacing an analog sensor and read the values on the com port 
+To configure an analog port  for stm 32 controller and read the values on the serial port  
 ## Components required:
-STM 32 CUBE IDE , STM32 NUCLEO BOARD, CONNECTING CABLE, SERIAL PORT UTILITY , ANALOG SENSOR - 3.3V TYPE 
+STM32 CUBE IDE, STM32 NUCLEO BOARD, COM PORT , CONNECTING CABLE , ANALOG SENSOR 
  ## Theory 
 
  
@@ -150,16 +150,49 @@ This module also includes a potentiometer that will fix the threshold value, & t
 
 
 ##  Program 
+```
+developed by : Sowmya V
+reg no : 212222110045
 
 
- 
+#include "main.h"
+#include"stdio.h"
+uint32_t adcvalue;
+#if defined (_ICCARM_) || defined (__ARMCC_VERSION)
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#elif defined(_GNUC_)
+   
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif  
 
-## Result :
+
+PUTCHAR_PROTOTYPE
+{
+
+  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
+
+while(1)
+{
+
+	HAL_ADC_Start(&hadc1);
+			HAL_ADC_PollForConversion(&hadc1,100);
+			adcvalue = HAL_ADC_GetValue(&hadc1);
+			HAL_ADC_Stop(&hadc1);
+			HAL_Delay(500);
+			printf("ADC VALUE:%ld\n",adcvalue);
+
+}
+
+```
  
 ## Output  :
+![image](https://github.com/SowmyaVisvanathan/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/119475775/f18c604f-12dd-42d6-b53b-bf29ef756116)
 
+![image](https://github.com/SowmyaVisvanathan/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/119475775/76c860f3-2c54-4aa2-aab4-b9a890e57076)
 
-
-
-
+## Result :
+Configured an analog port  for stm 32 controller and read the values on the serial port successfully.
 
